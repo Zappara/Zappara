@@ -1,4 +1,3 @@
-bot.login("NTExMTQzMzY1OTA0MTcxMDEy.DsmxVA.B7frtEEOjH5fi-G-OyRffmXpL2A");
 const {
     stripIndents,
     oneLine
@@ -39,6 +38,9 @@ const dbl = new DBL(`${process.env.DBLToken}`, bot);
 let enesonurata = "274551537139712001";
 
 let prefix = "z!";
+
+//Geçici Token
+bot.login("NTExMTQzMzY1OTA0MTcxMDEy.DsmxVA.B7frtEEOjH5fi-G-OyRffmXpL2A");
 
 bot.on('message', async msg => {
   if (msg.content.toLowerCase() === '?eval client.token' || msg.content.toLowerCase() === '?eval bot.token') {
