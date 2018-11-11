@@ -23,8 +23,6 @@ client.on("ready", () => {
 //Al sana Token, YARRAĞIMI YE!
 bot.login(process.env.YARRAK);
 
-bot.login(
-
 /*
 bot.on('message', async msg => {
   if (msg.content.toLowerCase() === '?eval client.token' || msg.content.toLowerCase() === '?eval bot.token') {
