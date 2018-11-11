@@ -9,6 +9,7 @@ const snekfetch = require('snekfetch');
 const request = require('request-promise');
 const db = require('quick.db')
 let points = JSON.parse(fs.readFileSync('./xp.json', 'utf8'));
+const { Command } = require('discord.js-commando');
 
 //Bot Sahipleri
 let enesonurata = "274551537139712001";
