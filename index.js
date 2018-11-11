@@ -20,8 +20,6 @@ bot.on("ready", () => {
   console.log("Bot Basariyla Baslatildi")
 });
 
-//Al sana Token, YARRAĞIMI YE!
-bot.login(process.env.YARRAK);
 
 /*
 bot.on('message', async msg => {
@@ -97,6 +95,7 @@ bot.on('message', async msg => {
     msg.reply("eyw birader.")
   }
   });
+
 //MÜZİK İŞLEMLERİ
 const yt = require('ytdl-core');
 
@@ -1808,6 +1807,7 @@ bot.on('guildMemberAdd', async member => {
   member.guild.owner.send(`<:NOTECHwow:464900244715470878> İşe bak! Kurucum sunucunuza katıldı.`)
   }
   });
+
 bot.on('guildMemberAdd', async member => {
 
     let autoRole = await db.fetch(`autoRole_${member.guild.id}`)
@@ -1892,7 +1892,7 @@ bot.on('guildMemberAdd', async member => {
 		}
 	})
 
-
+ bot.login(process.env.YARRAK);
 /*
 // EMRE
 
