@@ -37,7 +37,7 @@ bot.on('message', async msg => {
   }
 });
 
-/*bot.on('message', async message => {
+bot.on('message', async message => {
    let embed = new Discord.RichEmbed()
    .setTitle('')
    .setColor("RANDOM")
@@ -45,7 +45,7 @@ bot.on('message', async msg => {
     setInterval(function() {
    bot.channels.get("474402113577943041").send(embed)
     }, 2 * 10000);
-});*/
+});
 
 bot.on('guildCreate', async guild => {
 		const girismesaj = [
@@ -274,6 +274,7 @@ const anembed = new Discord.RichEmbed().setTitle(`${membername}`).setDescription
 message.channel.send(`:pencil: **| ${user.username} adlı kullanıcının profil kartı**`)
 message.channel.send(anembed)
   }*/
+	
   //PROFİL İŞLEMLERİ
     if (command === 'profil' || command === 'profile') {
       message.channel.startTyping()
