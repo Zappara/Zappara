@@ -29,10 +29,6 @@ const request = require('request-promise');
 const { promisifyAll } = require('tsubaki');
 const snekfetch = require('snekfetch');
 let points = JSON.parse(fs.readFileSync('./xp.json', 'utf8'));
-const dbaapi = require('discord-bots-api');
-const dba = new dbaapi(process.env.DBLToken)
-const DBL = require("dblapi.js");
-const dbl = new DBL(`${process.env.DBLToken}`, bot);
 
 //Bot Sahipleri
 let enesonurata = "274551537139712001";
