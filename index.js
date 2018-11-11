@@ -35,7 +35,7 @@ let enesonurata = "274551537139712001";
 let owner = enesonurata;
 let talha = enesonurata;
 
-let prefix = "*";
+let prefix = "?";
 
 bot.on("ready", () => {
   bot.user.setGame(`${prefix}yardım | ${prefix}davet`, "https://www.twitch.tv/enesonurata")
