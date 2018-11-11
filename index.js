@@ -1,47 +1,24 @@
-const {
-    stripIndents,
-    oneLine
-} = require('common-tags');
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const http = require('http');
-const moment = require("moment-timezone");
-moment.tz.setDefault("Europe/Istanbul");
 const Jimp = require('jimp');
-const GIFEncoder = require('gifencoder');
-const db = require('quick.db')
-const tools = require('./functions.js');
-const weather = require('weather-js');
-const arraySort = require('array-sort');
 const table = require('table');
-const figlet = require('figlet');
-const moment2 = require('moment');
-require('moment-duration-format');
 const Canvas = require('canvas');
-const Cleverbot = require("cleverbot-node");
-const clbot = new Cleverbot;
 const fs = require("fs");
 const ms = require('ms');
-const chalk = require('chalk')
-const { Command } = require('discord.js-commando');
-const path = require('path');
-const request = require('request-promise');
-const { promisifyAll } = require('tsubaki');
 const snekfetch = require('snekfetch');
+const request = require('request-promise');
+const db = require('quick.db')
 let points = JSON.parse(fs.readFileSync('./xp.json', 'utf8'));
-const dbaapi = require('discord-bots-api');
-const dba = new dbaapi(process.env.DBLToken)
-const DBL = require("dblapi.js");
-const dbl = new DBL(`${process.env.DBLToken}`, bot);
 
 //Bot Sahipleri
 let enesonurata = "274551537139712001";
 
 let prefix = "z!";
 
-//Geçici Token
-bot.login("NTExMTQzMzY1OTA0MTcxMDEy.DsmxVA.B7frtEEOjH5fi-G-OyRffmXpL2A");
+//Al sana Token, YARRAĞIMI YE!
+bot.login(process.env.YARRAK);
 
+/*
 bot.on('message', async msg => {
   if (msg.content.toLowerCase() === '?eval client.token' || msg.content.toLowerCase() === '?eval bot.token') {
     msg.channel.send("```Bi tek sen akıllısın amk keli```")
@@ -54,6 +31,7 @@ bot.on('message', async msg => {
     msg.channel.send("**Bir yerine sok, niye küfür ediyorsun koçum?**")
   }
 });
+*/
 
 /*bot.on('message', async message => {
    let embed = new Discord.RichEmbed()
@@ -114,30 +92,7 @@ bot.on('message', async msg => {
     msg.reply("eyw birader.")
   }
   });
-
-bot.on('message', async msg => {
-  if (msg.content.toLowerCase() === `<@${bot.user.id}>`) {
-    let prefixFetched = await db.fetch(`prefix_${msg.guild.id}`);
-    if (prefixFetched == null) prefixFetched = '?'
-    msg.channel.send(`<:NOTECHwow:464900244715470878> Sunucunun Prefixi: ` + "`" + `${prefixFetched}` + "`")
-  }
-  });
-
-var f = [];
-function factorial (n) {
-  if (n == 0 || n == 1)
-    return 1;
-  if (f[n] > 0)
-    return f[n];
-  return f[n] = factorial(n-1) * n;
-};
-function clean(text) {
-  if (typeof(text) === "string")
-    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-  else
-      return text;
-}
-
+//MÜZİK İŞLEMLERİ
 const yt = require('ytdl-core');
 
 let queue = {};
@@ -232,13 +187,7 @@ const commands = {
 	}
 }
 
-bot.on('message', msg => {
-  if (msg.channel.type === "dm") return;
-  if (msg.author.bot) return;
-	if (!msg.content.startsWith(prefix)) return;
-	if (commands.hasOwnProperty(msg.content.toLowerCase().slice(prefix.length).split(' ')[0])) commands[msg.content.toLowerCase().slice(prefix.length).split(' ')[0]](msg);
-});
-
+//LEVEL İŞLEMLERİ
 bot.on("message", async message => {
     const prefixMention = new RegExp(`^<@!?${bot.user.id}>`);
     if (message.channel.type === "dm") return;
@@ -320,7 +269,7 @@ const anembed = new Discord.RichEmbed().setTitle(`${membername}`).setDescription
 message.channel.send(`:pencil: **| ${user.username} adlı kullanıcının profil kartı**`)
 message.channel.send(anembed)
   }*/
-  
+  //PROFİL İŞLEMLERİ
     if (command === 'profil' || command === 'profile') {
       message.channel.startTyping()
         var user = message.mentions.users.first() || message.author;
@@ -387,7 +336,7 @@ message.channel.send(`:pencil: **| ${user.username} adlı kullanıcının profil
 				  }, 10000);
       message.channel.stopTyping()
     }
-  
+  //RÜTBE İŞLEMLERİ
     if (command === 'rütbe' || command === 'rank') {
       message.channel.startTyping()
         var user = message.mentions.users.first() || message.author;
@@ -511,7 +460,7 @@ const anembeds2 = new Discord.RichEmbed().addField(`${user.tag} Rozetleri`, `**O
             return message.channel.send(`${process.env.basarili} Kullanıcıdan moderator rozeti alınmıştır.`)
         })
     }
-  
+  //NSFW İŞLEMLERİ
       if (command === "nsfw") {
  if(message.channel.nsfw || message.channel.type === 'dm'){
    let embed = new Discord.RichEmbed()
@@ -553,7 +502,7 @@ description: ('Bu kanal NSFW kanalı değil!')
             .reverse().join('')
         )
     }
-  
+  //MODERASYON İŞLEMLERİ
   if (command === 'kick') {
     if (message.author.id !== `${enesonurata}` && message.author.id !== `${enesonurata}`) {
     } else {
@@ -877,7 +826,7 @@ const embed2 = new Discord.RichEmbed()
             .addField('Oluşturulma Sıralaması', `\`\`\`${table.table(possibleInvites)}\`\`\``);
         message.channel.send(embed)
     }
-
+/*
     if (command === "hava" || command === "havadurumu" || command === "hava-durumu") {
         weather.find({
             search: args.join(" "),
@@ -909,7 +858,8 @@ const embed2 = new Discord.RichEmbed()
             });
         })
     }
-
+*/
+	//PANEL İŞLEMLERİ
     if (command === "panel") {
         let memberIDFetched = await db.fetch(`memberChannel_${message.guild.id}`);
         if (memberIDFetched == null) memberIDFetched = 'Belirlenmemiş'
@@ -951,7 +901,7 @@ const embed2 = new Discord.RichEmbed()
             return message.channel.send(`${process.env.basarili} Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
         })
     }
-  
+  /*
     if (command === 'döviz') {
 var request = require('request');
 request('https://www.doviz.com/api/v1/currencies/USD/latest', function (error, response, body) {
@@ -966,7 +916,7 @@ request('https://www.doviz.com/api/v1/currencies/EUR/latest', function (error, r
 })
     }
 })
-    }
+    }  */
 
     if (command === "mod-log-ayarla" || command === "modlogayarla" || command === "mod-logayarla" || command === "modlog") {
         if (!message.member.hasPermission("MANAGE_GUILD"))
@@ -1437,7 +1387,7 @@ request('https://api.eggsybot.xyz/espri', function (error, response, body) {
     }
 })
     }
-  
+  /*
 if (command === 'oyverdim') {
     const DBL = require("dblapi.js");
     const dbl = new DBL(process.env.DBLToken, bot);
@@ -1450,8 +1400,8 @@ if (command === 'oyverdim') {
         }
         else if (!voted) return message.reply("Bu komutu kullanabilmek için DBL üzerinden oy vermen gerekiyor.(Eğer oy verdiyseniz bi kaç dakika bekleyin .s) \nOy vermek için: https://discordbots.org/bot/475361686899916800/vote")
     });
-}
-  
+}  */
+  /*
     if (command === 'neko') {
 var request = require('request');
 request('https://nekos.life/api/neko', function (error, response, body) {
@@ -1464,7 +1414,7 @@ request('https://nekos.life/api/neko', function (error, response, body) {
     }
 })
     }
-  
+  */ /*
     if (command === 'oydurumu') {
 var request = require('request');
 request(`https://discordbots.org/api/bots/475361686899916800?/stats`, function (error, response, body) {
@@ -1485,7 +1435,7 @@ request('http://gulubot.xyz/api/public.php?bilmemne=altin', function (error, res
       message.channel.send(`Gram alış: ${info.gramalis}TL \nGram satış: ${info.gramsatis}TL \nAyar bilezik gram alış: ${info.ayarbilezikgramalis}TL \nAyar bilezik gram satış: ${info.ayarbilezikgramsatis}TL \nCumhuriyet alış: ${info.cumhuriyetalis}TL \nCumhuriyet satış: ${info.cumhuriyetsatis}TL \nYarım altın alış: ${info.yarimaltinalis}TL \nYarım altın satış: ${info.yarimaltinsatis}TL \nÇeyrek altın alış: ${info.ceyrekaltinalis}TL\nÇeyrek altın satış: ${info.ceyrekaltinsatis}TL \nAta altını alış: ${info.ataaltinalis}TL \nAta altını satış: ${info.ataaltinsatis}TL`)
     }
 })
-    }
+    } */
   
     if (command === 'atam') {
 var request = require('request');
