@@ -15,8 +15,15 @@ let enesonurata = "274551537139712001";
 
 let prefix = "z!";
 
+client.on("ready", () => {
+  client.user.setGame(`${prefix}yardım | ${prefix}davet`, "https://www.twitch.tv/enesonurata")
+  console.log("Bot Basariyla Baslatildi")
+});
+
 //Al sana Token, YARRAĞIMI YE!
 bot.login(process.env.YARRAK);
+
+bot.login(
 
 /*
 bot.on('message', async msg => {
