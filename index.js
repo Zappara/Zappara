@@ -12,7 +12,9 @@ let points = JSON.parse(fs.readFileSync('./xp.json', 'utf8'));
 const { Command } = require('discord.js-commando');
 
 //Bot Sahipleri
+let owner = "274551537139712001";
 let enesonurata = "274551537139712001";
+let talha = owner;
 
 let prefix = "z!";
 
@@ -22,9 +24,8 @@ bot.on("ready", () => {
 });
 
 
-/*
 bot.on('message', async msg => {
-  if (msg.content.toLowerCase() === '?eval client.token' || msg.content.toLowerCase() === '?eval bot.token') {
+  if (msg.content.toLowerCase() === 'z!eval client.token' || msg.content.toLowerCase() === '?eval bot.token') {
     msg.channel.send("```Bi tek sen akıllısın amk keli```")
   }
 });
@@ -35,7 +36,6 @@ bot.on('message', async msg => {
     msg.channel.send("**Bir yerine sok, niye küfür ediyorsun koçum?**")
   }
 });
-*/
 
 /*bot.on('message', async message => {
    let embed = new Discord.RichEmbed()
