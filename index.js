@@ -29,6 +29,20 @@ const request = require('request-promise');
 const { promisifyAll } = require('tsubaki');
 const snekfetch = require('snekfetch');
 let points = JSON.parse(fs.readFileSync('./xp.json', 'utf8'));
+const client = bot;
+
+//DOSYALARI KOMUT OLARAK ALGILAMASI ICIN
+client.on("message", async msg => {
+  if (msg.author.bot) return;
+  if(msg.content.indexOf(prefix) !== 0) return;
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+  const event = msg.content.toLower
+  try {
+    let commandFile = require(`./komutlar/${command}.js`);
+    commandFile.run(client, msg, args);
+  } catch (err) {}
+});
 
 //Bot Sahipleri
 let enesonurata = "274551537139712001";
@@ -73,7 +87,7 @@ bot.on('guildCreate', async guild => {
 		  'Bot `EnesOnurAta` tarafından geliştirilmektedir.',
 		  'Botumuzun özelliklerini görmek için z!yardım komutunu kullanabilirsiniz.',
 		  '',
-		  `**Zappara Resmi Discord Sunucusu** https://discord.gg/YNPRRQd`
+		  `**Zappara Resmi Discord Sunucusu** ` /*Boşluğa davet linki gelecek : https://discord.gg/DAVET */
 		]
 		guild.owner.send(girismesaj)
 });
@@ -433,82 +447,82 @@ const anembeds2 = new Discord.RichEmbed().addField(`${user.tag} Rozetleri`, `**O
     }
   
     if (command === "bioayarla" || command === "biyografi") {
-        if (args.join(' ').length > 35) return message.channel.send(`${process.env.basarisiz} En fazla 35 karakter girebilirsiniz.`)
+        if (args.join(' ').length > 35) return message.channel.send(`:negative_squared_cross_mark:  En fazla *35* karakter girebilirsiniz.`)
         if (!args.join(" ") && args.join(" ").toLowerCase() === `none`)
             return message.channel.send(`Uyarı: Geçerli bir yazı yazmalısın.\nDoğru kullanım: ${prefix}biyografi Notech bot adamdır.`)
         let newMessage;
         if (args.join(" ").toLowerCase() === `none`) newMessage = '';
         else newMessage = args.join(" ").trim();
         db.set(`memberID_${message.author.id}`, newMessage).then(i => {
-            return message.channel.send(`${process.env.basarili} Yeni biyografin ayarlandı.`)
+            return message.channel.send(`:white_check_mark: Yeni biyografin ayarlandı.`)
         })
     }
   
     if (command === "isim" || command === "isimayarla") {
-        if (args.join(' ').length > 15) return message.channel.send(`${process.env.basarisiz} En fazla 15 karakter girebilirsiniz.`)
+        if (args.join(' ').length > 15) return message.channel.send(`:negative_squared_cross_mark:  En fazla *15* karakter girebilirsiniz.`)
         if (!args.join(" ") && args.join(" ").toLowerCase() === `none`)
             return message.channel.send(`Uyarı: Geçerli bir yazı yazmalısın.\nDoğru kullanım: ${prefix}isim Notech`)
         let newMessage;
         if (args.join(" ").toLowerCase() === `none`) newMessage = '';
         else newMessage = args.join(" ").trim();
         db.set(`membername_${message.author.id}`, newMessage).then(i => {
-            return message.channel.send(`${process.env.basarili} Yeni ismin ayarlandı.`)
+            return message.channel.send(`:white_check_mark: Yeni ismin ayarlandı.`)
         })
     }
   
     if (command === "onayla") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channek.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channek.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge_${user.id}`, "https://cdn.discordapp.com/attachments/474685686075621376/480845736347435015/401725450470031362.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıya onay rozeti verilmiştir.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıya onay rozeti verilmiştir.`)
         })
     }
   
     if (command === "konay" || command === "konayla") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge_${user.id}`, "https://cdn.discordapp.com/attachments/461622592688619520/472923575049781268/profile.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıdan onay rozeti alınmıştır.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıdan onay rozeti alınmıştır.`)
         })
     }
   
     if (command === "yetkili" || command === "ekip") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`:negative_squared_cross_mark: Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge2_${user.id}`, "https://cdn.discordapp.com/attachments/474685686075621376/480845736347435009/401723658491527168.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıya ekip rozeti verilmiştir.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıya ekip rozeti verilmiştir.`)
         })
     }
   
     if (command === "kyetkili" || command === "kekip") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge2_${user.id}`, "https://cdn.discordapp.com/attachments/461622592688619520/472923575049781268/profile.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıdan ekip rozeti alınmıştır.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıdan ekip rozeti alınmıştır.`)
         })
     }
   
     if (command === "destekci" || command === "destekçi") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge3_${user.id}`, "https://cdn.discordapp.com/attachments/474685686075621376/480845737006202881/401725034453925889.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıya destekçi rozeti verilmiştir.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıya destekçi rozeti verilmiştir.`)
         })
     }
   
     if (command === "kdestekci" || command === "kdestekçi") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge3_${user.id}`, "https://cdn.discordapp.com/attachments/461622592688619520/472923575049781268/profile.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıdan destekçi rozeti alınmıştır.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıdan destekçi rozeti alınmıştır.`)
         })
     }
   
     if (command === "mod" || command === "moderator") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge4_${user.id}`, "https://cdn.discordapp.com/attachments/474685686075621376/480845735647117312/401724520806875139.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıya moderator rozeti verilmiştir.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıya moderator rozeti verilmiştir.`)
         })
     }
   
     if (command === "kmod" || command === "kmoderator") {
-        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`);
+        if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`);
         db.set(`memberBadge4_${user.id}`, "https://cdn.discordapp.com/attachments/461622592688619520/472923575049781268/profile.png").then(i => {
-            return message.channel.send(`${process.env.basarili} Kullanıcıdan moderator rozeti alınmıştır.`)
+            return message.channel.send(`:white_check_mark: Kullanıcıdan moderator rozeti alınmıştır.`)
         })
     }
   
@@ -530,7 +544,7 @@ description: ('Bu kanal NSFW kanalı değil!')
   
     if (command === "ascii") {
 
-        if (args.join(' ').length > 14) return message.channel.send(`${process.env.basarisiz} En fazla 14 karakter girebilirsiniz.`)
+        if (args.join(' ').length > 14) return message.channel.send(`:negative_squared_cross_mark:  En fazla 14 karakter girebilirsiniz.`)
         if (!args.join(' ')) return message.channel.send('Lütfen ASCII olacak yazıyı giriniz! Kullanım: ascii <yazı>').then(msg => msg.delete({
             timeout: 30000
         }));
@@ -543,7 +557,7 @@ description: ('Bu kanal NSFW kanalı değil!')
         // Start with the character '!'
         const OFFSET = '!'.charCodeAt(0);
         if (args.length < 1) {
-            message.channel.send(`${process.env.basarisiz} Ters yazılacak yazıyı yazmalısınız.`);
+            message.channel.send(`:negative_squared_cross_mark:  Ters yazılacak yazıyı yazmalısınız.`);
         }
 
         message.channel.send(
@@ -585,7 +599,7 @@ description: ('Bu kanal NSFW kanalı değil!')
         // Start with the character '!'
         const OFFSET = '!'.charCodeAt(0);
         if (args.length < 1) {
-            message.channel.send(`${process.env.basarisiz} Estetik yazılacak yazıyı yazmalısınız.`);
+            message.channel.send(`:negative_squared_cross_mark:  Estetik yazılacak yazıyı yazmalısınız.`);
         }
 
         message.channel.send(
@@ -860,7 +874,7 @@ const embed2 = new Discord.RichEmbed()
     if (command === "davet-skor" || command === "davetler") {
 
         let invites = await message.guild.fetchInvites().catch(error => {
-            return message.channel.send(`${process.env.basarisiz} Davetleri görüntülemek için yetkim bulunmuyor.`);
+            return message.channel.send(`:negative_squared_cross_mark:  Davetleri görüntülemek için yetkim bulunmuyor.`);
         })
         invites = invites.array();
         arraySort(invites, 'uses', {
@@ -886,7 +900,7 @@ const embed2 = new Discord.RichEmbed()
             if (err) message.channel.send(process.env.basarisiz + "Bir hata ile karşılaştım.\n`" + err + "`");
             if (result === undefined || result.length === 0) {
                 const embed = new Discord.RichEmbed()
-                    .setDescription(`${process.env.basarisiz} Geçersiz konum girdiniz.`)
+                    .setDescription(`:negative_squared_cross_mark:  Geçersiz konum girdiniz.`)
                     .setColor("RANDOM")
                 message.channel.send(embed)
                 return;
@@ -927,28 +941,28 @@ const embed2 = new Discord.RichEmbed()
 
     if (command === "giriş-rolü-ayarla" || command === "oto-rol-ayarla" || command === "otorolayarla" || command === "otorol") {
         if (!message.member.hasPermission("MANAGE_GUILD"))
-            return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`)
+            return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`)
         if (!args.join(" ") && args.join(" ").toLowerCase() === `none`)
             return message.channel.send(`Geçerli bir rol girmelisin.\nDoğru kullanım: ${prefix}otorolayarla [Rol Adı]`)
         let autoRole;
         if (args.join(" ").toLowerCase() === `none`) autoRole = '';
         else autoRole = args.join(" ").trim();
         db.set(`autoRole_${message.guild.id}`, autoRole).then(i => {
-            return message.channel.send(`${process.env.basarili} Otomatik rol ${i} olarak seçilmiştir.`)
+            return message.channel.send(`:white_check_mark: Otomatik rol ${i} olarak seçilmiştir.`)
         })
     }
 
     if (command === "log-ayarla" || command === "logayarla") {
         if (!message.member.hasPermission("MANAGE_GUILD"))
-            return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`)
+            return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`)
         if (!message.mentions.channels.first() && args.join(" ").toLowerCase() === `none`)
             return message.channel.send("Geçerli bir kanal etiketlemelisin.\nDoğru kullanım: ${prefix}log-ayarla [#kanal]")
         let newChannel;
         if (args.join(" ").toLowerCase() === `none`) newChannel = '';
         else newChannel = message.mentions.channels.first().id;
         db.set(`memberChannel_${message.guild.id}`, newChannel).then(i => {
-            const ayarlar2 = new Discord.RichEmbed().setFooter(`${process.env.basarili} Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
-            return message.channel.send(`${process.env.basarili} Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
+            const ayarlar2 = new Discord.RichEmbed().setFooter(`:white_check_mark: Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
+            return message.channel.send(`:white_check_mark: Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
         })
     }
   
@@ -962,7 +976,7 @@ request('https://www.doviz.com/api/v1/currencies/EUR/latest', function (error, r
     if (error) return console.log('Hata:', error); 
     else if (!error) { 
         var euro = JSON.parse(body);
-      message.channel.send(`${process.env.dolar} Dolar satış: ${info.selling}TL \n${process.env.dolar} Dolar alış: ${info.buying}TL \n\n${process.env.euro} Euro satış: ${euro.selling}TL \n${process.env.euro} Euro alış: ${euro.buying}TL`)    }
+      message.channel.send(`:heavy_dollar_sign: Dolar satış: ${info.selling}TL \n:heavy_dollar_sign: Dolar alış: ${info.buying}TL \n\n:euro: Euro satış: ${euro.selling}TL \n:euro: Euro alış: ${euro.buying}TL`)    }
 })
     }
 })
@@ -970,15 +984,15 @@ request('https://www.doviz.com/api/v1/currencies/EUR/latest', function (error, r
 
     if (command === "mod-log-ayarla" || command === "modlogayarla" || command === "mod-logayarla" || command === "modlog") {
         if (!message.member.hasPermission("MANAGE_GUILD"))
-            return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`)
+            return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`)
         if (!message.mentions.channels.first() && args.join(" ").toLowerCase() === `none`)
             return message.channel.send("Geçerli bir kanal etiketlemelisin.\nDoğru kullanım: ${prefix}mod-log-ayarla [#kanal]")
         let newChannel;
         if (args.join(" ").toLowerCase() === `none`) newChannel = '';
         else newChannel = message.mentions.channels.first().id;
         db.set(`membermodChannel_${message.guild.id}`, newChannel).then(i => {
-            const ayarlar2 = new Discord.RichEmbed().setFooter(`${process.env.basarili} Mod-Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
-            return message.channel.send(`${process.env.basarili} Mod-Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
+            const ayarlar2 = new Discord.RichEmbed().setFooter(`:white_check_mark: Mod-Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
+            return message.channel.send(`:white_check_mark: Mod-Log kanalı ${message.mentions.channels.first()} olarak seçilmiştir.`)
         })
     }	
 	
@@ -1072,11 +1086,11 @@ request('https://www.doviz.com/api/v1/currencies/EUR/latest', function (error, r
         const embed1 = new Discord.RichEmbed().setFooter("Uyarı: Üzgünüm bu komutu kullanabilecek yetkin yok.").setColor(0xc25b5b)
         const embed2 = new Discord.RichEmbed().setFooter(`Uyarı: Geçerli bir prefix girmelisin.\nDoğru kullanım: ${prefix}prefix [Yeni prefix]`).setColor(0xc25b5b)
         if (!message.member.hasPermission("MANAGE_GUILD"))
-            return message.channel.send(`${process.env.basarisiz} Bu komutu kullanmak için yetkin bulunmuyor.`)
+            return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanmak için yetkin bulunmuyor.`)
         if (!args[0])
-            return message.channel.send(`${process.env.basarisiz} Prefix girmelisiniz.`)
+            return message.channel.send(`:negative_squared_cross_mark: Prefix girmelisiniz.`)
         db.set(`prefix_${message.guild.id}`, args.join('  ')).then(ü => {
-            message.channel.send(`${process.env.basarili} Prefix ${ü} olarak seçilmiştir.`)
+            message.channel.send(`:white_check_mark: Prefix ${ü} olarak seçilmiştir.`)
         })
     }
     if (command === "parti" || command === "disko") {
@@ -1139,9 +1153,9 @@ request('https://www.doviz.com/api/v1/currencies/EUR/latest', function (error, r
 
     if (command === 'yenile') {
         if (message.author.id !== `${owner}` && message.author.id !== `${talha}`) {
-            message.channel.send(`${process.env.basarisiz} Bu komutu kullanabilmek için yetkin bulunmuyor.`)
+            message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanabilmek için yetkin bulunmuyor.`)
         } else {
-            message.channel.send(`${process.env.basarili} Talebiniz alındı. Yeniden başlıyorum..`).then(msg => {
+            message.channel.send(`:white_check_mark: Talebiniz alındı. Yeniden başlıyorum..`).then(msg => {
                 console.log(`Yeniden başlıyorum..`);
                 process.exit(0);
             })
@@ -1587,7 +1601,7 @@ request('https://random.dog/woof.json', function (error, response, body) {
         .addField("Bug", `${mesaj}`, true)
     channel.send(embed);
       message.delete()
-      message.channel.send(`${process.env.basarili} Bildirinizi sunucuya gönderdim.`)
+      message.channel.send(`:white_check_mark:  Bildirinizi sunucuya gönderdim.`)
 }
   
     if (command === 'başvur') {
@@ -1600,7 +1614,7 @@ request('https://random.dog/woof.json', function (error, response, body) {
         .addField("Onaylanacak Kişi", `${message.author.tag} \n(${message.author.id})`, true)
         .addField("Biyografi", `${mesaj}`, true)
     channel.send(embed);
-      message.channel.send(`${process.env.basarili} Başvurunuzu gönderdim. En yakın zamanda yanıt verilecektir.`)
+      message.channel.send(`:white_check_mark:  Başvurunuzu gönderdim. En yakın zamanda yanıt verilecektir.`)
 }
   
       if (command === 'tavsiye') {
@@ -1615,7 +1629,7 @@ request('https://random.dog/woof.json', function (error, response, body) {
         .addField("Tavsiye", `${mesaj}`, true)
     channel.send(embed);
         message.delete()
-        message.channel.send(`${process.env.basarili} Bildirinizi sunucuya gönderdim.`)
+        message.channel.send(`:white_check_mark:  Bildirinizi sunucuya gönderdim.`)
 }
   
     if (command === "avatar") {
@@ -1631,35 +1645,35 @@ request('https://random.dog/woof.json', function (error, response, body) {
  
   if(command === "yasakla") {
     if (!message.member.hasPermission("BAN_MEMBERS"))
-      return message.channel.send(`${process.env.basarisiz} Bu komutu kullanabilmek için yetkin bulunmuyor.`)
+      return message.channel.send(`:negative_squared_cross_mark: Bu komutu kullanabilmek için yetkin bulunmuyor.`)
     let member = message.mentions.members.first();
     if(!member)
-      return message.channel.send(`${process.env.basarisiz} Sunucudan yasaklayacağım kişiyi etiketlemelisin.`);
+      return message.channel.send(`:negative_squared_cross_mark:  Sunucudan yasaklayacağım kişiyi etiketlemelisin.`);
     if(!member.bannable) 
-      return message.channel.send(`${process.env.basarisiz} Sunucudan yasaklayamadım. Yoksa bana sunucudan atma yetkisi vermedin mi? veya bana yetkiliyi mi yasaklamaya çalıştırdın?`);
+      return message.channel.send(`:negative_squared_cross_mark:  Sunucudan yasaklayamadım. Yoksa bana sunucudan atma yetkisi vermedin mi? veya bana yetkiliyi mi yasaklamaya çalıştırdın?`);
 
     let reason = args.slice(1).join(' ');
     if(!reason) reason = "Açıklama yok.";
     
     await member.ban(reason)
-      .catch(error => message.channel.send(`${process.env.basarisiz} Üzgünüm sunucudan yasaklayamadım. HATA: ${error}`));
+      .catch(error => message.channel.send(`:negative_squared_cross_mark:  Üzgünüm sunucudan yasaklayamadım. HATA: ${error}`));
     message.channel.send(`**${message.author.tag}** sunucudan **${member.user.tag}** kişisini yasakladı. \n**Açıklama:** ${reason}`);
   }
 
    if(command === "at") {
      if (!message.member.hasPermission("KICK_MEMBERS"))
-      return message.channel.send(`${process.env.basarisiz} Bu komutu kullanabilmek için yetkin bulunmuyor.`)
+      return message.channel.send(`:negative_squared_cross_mark:  Bu komutu kullanabilmek için yetkin bulunmuyor.`)
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!member)
-      return message.channel.send(`${process.env.basarisiz} Sunucudan yasaklayacağım kişiyi etiketlemelisin.`);
+      return message.channel.send(`:negative_squared_cross_mark: Sunucudan yasaklayacağım kişiyi etiketlemelisin.`);
     if(!member.kickable) 
-      return message.channel.send(`${process.env.basarisiz} Sunucudan atamadım. Yoksa bana sunucudan atma yetkisi vermedin mi? veya bana yetkiliyi mi attırmaya çalıştırdın?`);
+      return message.channel.send(`:negative_squared_cross_mark:  Sunucudan atamadım. Yoksa bana sunucudan atma yetkisi vermedin mi? veya bana yetkiliyi mi attırmaya çalıştırdın?`);
     
     let reason = args.slice(1).join(' ');
     if(!reason) reason = "Açıklama yok.";
     
     await member.kick(reason)
-      .catch(error => message.channel.send(`${process.env.basarisiz} Üzgünüm sunucudan atamadım. HATA: ${error}`));
+      .catch(error => message.channel.send(`:negative_squared_cross_mark:  Üzgünüm sunucudan atamadım. HATA: ${error}`));
     message.channel.send(`**${message.author.tag}** sunucudan **${member.user.tag}** kişisini attı. \n**Açıklama:** ${reason}`);
 
   }
