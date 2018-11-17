@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-exports.run = (client, message, args) => {
+exports.run = (bot, message, args) => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 
@@ -23,7 +23,7 @@ exports.run = (client, message, args) => {
     .addField('✭ Sunucu Adı:', message.guild.name, true)
     .addField('✭ Sunucu Kimliği:', message.guild.id, true)
     .addField('✭ Sunucu Daveti:', davetlinki.url)
-    client.fetchUser(id)
+    bot.fetchUser(id)
     .then(user => {user.send({embed})})
   }
 });
