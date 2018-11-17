@@ -16,6 +16,7 @@ let mesaj = args.slice(0).join(' ');
     .setDescription(message.author.username + ', :basarili:  Tavsiyeniz bildirildi! Tavsiyenizi bildirdiğiniz için teşekkür ederiz!')
   message.channel.send(tavsiye1);
 const Davet = bot.channels.get(message.channel.id).createInvite({ maxAge: 0})
+let TavsiyeKanalı = client.guilds.get("511144954836549658").channels.get("513347194477346826");
 const tavsiye = new Discord.RichEmbed()
   .setColor("RANDOM")
   .setThumbnail(message.author.avatarURL)
@@ -23,7 +24,7 @@ const tavsiye = new Discord.RichEmbed()
   .addField(':envelope: Kullanıcı Bilgileri', '✭ ID: ' + message.author.id + '\n✭ Adı: ' + message.author.username + '\n✭ Tagı: ' + message.author.discriminator + '')
   .addField(':pencil: Tavsiye', mesaj)
   .addField(':link: Davet', Davet)
-return client.channels.get("513347194477346826").send(tavsiye);
+return TavsiyeKanalı.send(tavsiye);
 };
 
 exports.conf = {
