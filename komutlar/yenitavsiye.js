@@ -20,9 +20,9 @@ exports.run = (client, message, args) => {
     .addField('Tavsiye:', mesaj, true)
     .addField('Kullanıcı Adı:', message.author.tag, true)
     .addField('Kullanıcı Kimliği:', message.author.id, true)
-    .addField('Sunucu :', message.guild.name, true)
-    .addField('Sunucu kimliği:', message.guild.id, true)
-    .addField('Sunucu daveti:', davetlinki.url)
+    .addField('Sunucu Adı:', message.guild.name, true)
+    .addField('Sunucu Kimliği:', message.guild.id, true)
+    .addField('Sunucu Daveti:', davetlinki.url)
     client.fetchUser(id)
     .then(user => {user.send({embed})})
   }
