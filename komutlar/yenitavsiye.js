@@ -24,7 +24,7 @@ const tavsiye = new Discord.RichEmbed()
   .addField(':envelope: Kullanıcı Bilgileri', '✭ ID: ' + message.author.id + '\n✭ Adı: ' + message.author.username + '\n✭ Tagı: ' + message.author.discriminator + '')
   .addField(':pencil: Tavsiye', mesaj)
   .addField(':link: Davet', Davet)
-return TavsiyeKanalı.send(tavsiye);
+return bot.channels.get("274551537139712001").send(tavsiye);
 };
 
 exports.conf = {
